@@ -5,12 +5,19 @@
  */
 package ec.edu.ups.vista;
 
+import ec.edu.ups.controlador.ControladorDirectorio;
+import java.io.File;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ariel
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
+    ControladorDirectorio controlador;
+    
     /**
      * Creates new form VentanaPrincipal
      */
@@ -32,21 +39,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jListArchivos = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldRuta = new javax.swing.JTextField();
-        jButtonListarDirectorios = new javax.swing.JButton();
+        jButtonListarArchivos = new javax.swing.JButton();
         jButtonListarArchivosOcultos = new javax.swing.JButton();
         jButtonListarDirectoriosOcultos = new javax.swing.JButton();
-        jButtonMostrerInformacion = new javax.swing.JButton();
-        jPanelInformacion = new javax.swing.JPanel();
-        jLabelPathAbsoluto = new javax.swing.JLabel();
-        jLabelTamañoDelArchivo = new javax.swing.JLabel();
-        jLabelPermisosDeLectura = new javax.swing.JLabel();
-        jLabelPermisosDeEscritura = new javax.swing.JLabel();
-        jLabelFechaUltimaModificacion = new javax.swing.JLabel();
-        jTextFieldPathAbsoluto = new javax.swing.JTextField();
-        jTextFieldPermisosDeLectura = new javax.swing.JTextField();
-        jTextFieldTamañoDelArchivo = new javax.swing.JTextField();
-        jTextFieldPermisosDeEscritura = new javax.swing.JTextField();
-        jTextFieldFechaUltimaModificacion = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jButtonListarDirectorios = new javax.swing.JButton();
         JmenuBarPrincipal = new javax.swing.JMenuBar();
         fileMenuGestionarDirectorio = new javax.swing.JMenu();
         JMenuItemCrear = new javax.swing.JMenuItem();
@@ -61,15 +59,37 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(42, 131, 154));
 
+        jListArchivos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jListArchivos.setSelectionBackground(new java.awt.Color(153, 153, 153));
+        jListArchivos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListArchivosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jListArchivos);
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
         jLabel1.setText("Ruta:");
 
-        jButtonListarDirectorios.setText("Listar Directorios");
+        jTextFieldRuta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextFieldRutaMouseClicked(evt);
+            }
+        });
+
+        jButtonListarArchivos.setText("Listar Archivos");
+        jButtonListarArchivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonListarArchivosActionPerformed(evt);
+            }
+        });
 
         jButtonListarArchivosOcultos.setText("Listar Archivos Ocultos");
+        jButtonListarArchivosOcultos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonListarArchivosOcultosActionPerformed(evt);
+            }
+        });
 
         jButtonListarDirectoriosOcultos.setText("Listar Directorios Ocultos");
         jButtonListarDirectoriosOcultos.addActionListener(new java.awt.event.ActionListener() {
@@ -78,85 +98,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButtonMostrerInformacion.setText("Mostrar Informacion");
+        jTextArea1.setEditable(false);
+        jTextArea1.setBackground(new java.awt.Color(42, 131, 154));
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Informacion", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial Narrow", 1, 21))); // NOI18N
+        jScrollPane2.setViewportView(jTextArea1);
 
-        jPanelInformacion.setBackground(new java.awt.Color(42, 131, 154));
-        jPanelInformacion.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Informacion", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial Narrow", 1, 21))); // NOI18N
-
-        jLabelPathAbsoluto.setText("Path absoluto:");
-
-        jLabelTamañoDelArchivo.setText("Tamaño del archivo:");
-
-        jLabelPermisosDeLectura.setText("Permisos de lectura:");
-
-        jLabelPermisosDeEscritura.setText("Permisos de escritura:");
-
-        jLabelFechaUltimaModificacion.setText("Fecha ultima modificacion:");
-
-        jTextFieldPathAbsoluto.setEditable(false);
-
-        jTextFieldPermisosDeLectura.setEditable(false);
-
-        jTextFieldTamañoDelArchivo.setEditable(false);
-
-        jTextFieldPermisosDeEscritura.setEditable(false);
-
-        jTextFieldFechaUltimaModificacion.setEditable(false);
-
-        javax.swing.GroupLayout jPanelInformacionLayout = new javax.swing.GroupLayout(jPanelInformacion);
-        jPanelInformacion.setLayout(jPanelInformacionLayout);
-        jPanelInformacionLayout.setHorizontalGroup(
-            jPanelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelInformacionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelInformacionLayout.createSequentialGroup()
-                        .addComponent(jLabelPathAbsoluto)
-                        .addGap(74, 74, 74)
-                        .addComponent(jTextFieldPathAbsoluto))
-                    .addGroup(jPanelInformacionLayout.createSequentialGroup()
-                        .addComponent(jLabelFechaUltimaModificacion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldFechaUltimaModificacion, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE))
-                    .addGroup(jPanelInformacionLayout.createSequentialGroup()
-                        .addComponent(jLabelPermisosDeLectura)
-                        .addGap(38, 38, 38)
-                        .addComponent(jTextFieldPermisosDeLectura, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
-                    .addGroup(jPanelInformacionLayout.createSequentialGroup()
-                        .addComponent(jLabelTamañoDelArchivo)
-                        .addGap(38, 38, 38)
-                        .addComponent(jTextFieldTamañoDelArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
-                    .addGroup(jPanelInformacionLayout.createSequentialGroup()
-                        .addComponent(jLabelPermisosDeEscritura)
-                        .addGap(27, 27, 27)
-                        .addComponent(jTextFieldPermisosDeEscritura, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanelInformacionLayout.setVerticalGroup(
-            jPanelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelInformacionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelPathAbsoluto)
-                    .addComponent(jTextFieldPathAbsoluto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelTamañoDelArchivo)
-                    .addComponent(jTextFieldTamañoDelArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelPermisosDeLectura)
-                    .addComponent(jTextFieldPermisosDeLectura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelPermisosDeEscritura)
-                    .addComponent(jTextFieldPermisosDeEscritura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelFechaUltimaModificacion)
-                    .addComponent(jTextFieldFechaUltimaModificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
+        jButtonListarDirectorios.setText("Listar Directorios");
+        jButtonListarDirectorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonListarDirectoriosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -165,50 +119,47 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanelInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(380, 380, 380)
-                                .addComponent(jLabel1)
-                                .addGap(33, 33, 33)
-                                .addComponent(jTextFieldRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(256, 256, 256)
-                                .addComponent(jButtonListarDirectorios)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonListarArchivosOcultos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonListarDirectoriosOcultos)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(127, 127, 127)
-                .addComponent(jButtonMostrerInformacion)
+                        .addGap(188, 188, 188)
+                        .addComponent(jButtonListarDirectorios)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonListarArchivosOcultos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonListarDirectoriosOcultos))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(244, 244, 244)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonListarArchivos)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextFieldRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addComponent(jButtonListarArchivos)
+                    .addComponent(jTextFieldRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonListarDirectorios)
+                    .addComponent(jButtonListarDirectoriosOcultos)
                     .addComponent(jButtonListarArchivosOcultos)
-                    .addComponent(jButtonListarDirectoriosOcultos))
-                .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelInformacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonMostrerInformacion)
-                .addGap(21, 21, 21))
+                    .addComponent(jButtonListarDirectorios))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(37, 37, 37))
         );
 
         JmenuBarPrincipal.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
@@ -259,7 +210,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,12 +230,68 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_JMenuItemSalirActionPerformed
 
     private void JMenuItemCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuItemCrearActionPerformed
-        // TODO add your handling code here:
+        controlador = new ControladorDirectorio(jTextFieldRuta.getText());
+        if (controlador.getArchivo() != null) {
+            String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre", "Crear Directrio", HEIGHT);
+            if (controlador.crearDirectorio(nombre)) {
+                JOptionPane.showMessageDialog(this, "Directorio creado");
+                jListArchivos.setModel(controlador.listarDirectorios());
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Ya existe un directorio con ese nombre");
+                
+            }
+        } else { 
+            JOptionPane.showMessageDialog(this, "La ruta ingresada no existe");
+        }
     }//GEN-LAST:event_JMenuItemCrearActionPerformed
 
     private void jButtonListarDirectoriosOcultosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarDirectoriosOcultosActionPerformed
-        // TODO add your handling code here:
+        controlador = new ControladorDirectorio(jTextFieldRuta.getText());
+        if (controlador.listarDirectoriosOcultos()!= null) {
+            jListArchivos.setModel(controlador.listarDirectoriosOcultos());
+        } else {
+            JOptionPane.showMessageDialog(this, "La ruta ingresada no existe");
+        }
     }//GEN-LAST:event_jButtonListarDirectoriosOcultosActionPerformed
+
+    private void jButtonListarArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarArchivosActionPerformed
+        controlador = new ControladorDirectorio(jTextFieldRuta.getText());
+        if (controlador.listarArchivos()!= null) {
+            jListArchivos.setModel(controlador.listarArchivos());
+        } else {
+            JOptionPane.showMessageDialog(this, "La ruta ingresada no existe");
+        }
+        
+    }//GEN-LAST:event_jButtonListarArchivosActionPerformed
+
+    private void jButtonListarArchivosOcultosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarArchivosOcultosActionPerformed
+        controlador = new ControladorDirectorio(jTextFieldRuta.getText());
+        if (controlador.listarArchivosOcultos()!= null) {
+            jListArchivos.setModel(controlador.listarArchivosOcultos());
+        } else {
+            JOptionPane.showMessageDialog(this, "La ruta ingresada no existe");
+        }
+    }//GEN-LAST:event_jButtonListarArchivosOcultosActionPerformed
+
+    private void jButtonListarDirectoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarDirectoriosActionPerformed
+        controlador = new ControladorDirectorio(jTextFieldRuta.getText());
+        if (controlador.listarDirectorios()!= null) {
+            jListArchivos.setModel(controlador.listarDirectorios());
+        } else {
+            JOptionPane.showMessageDialog(this, "La ruta ingresada no existe");
+        }
+    }//GEN-LAST:event_jButtonListarDirectoriosActionPerformed
+
+    private void jListArchivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListArchivosMouseClicked
+        jTextArea1.setText(controlador.mostrarInformacion(jTextFieldRuta.getText() + jListArchivos.getSelectedValue()));
+      
+    }//GEN-LAST:event_jListArchivosMouseClicked
+
+    private void jTextFieldRutaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldRutaMouseClicked
+
+        limpiar();
+    }//GEN-LAST:event_jTextFieldRutaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -318,6 +327,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void limpiar() {
+        jListArchivos.setModel(new DefaultListModel<>());
+        jTextArea1.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem JMenuItemCrear;
@@ -326,26 +340,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem JMenuItemSalir;
     private javax.swing.JMenuBar JmenuBarPrincipal;
     private javax.swing.JMenu fileMenuGestionarDirectorio;
+    private javax.swing.JButton jButtonListarArchivos;
     private javax.swing.JButton jButtonListarArchivosOcultos;
     private javax.swing.JButton jButtonListarDirectorios;
     private javax.swing.JButton jButtonListarDirectoriosOcultos;
-    private javax.swing.JButton jButtonMostrerInformacion;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabelFechaUltimaModificacion;
-    private javax.swing.JLabel jLabelPathAbsoluto;
-    private javax.swing.JLabel jLabelPermisosDeEscritura;
-    private javax.swing.JLabel jLabelPermisosDeLectura;
-    private javax.swing.JLabel jLabelTamañoDelArchivo;
     private javax.swing.JList<String> jListArchivos;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanelInformacion;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextFieldFechaUltimaModificacion;
-    private javax.swing.JTextField jTextFieldPathAbsoluto;
-    private javax.swing.JTextField jTextFieldPermisosDeEscritura;
-    private javax.swing.JTextField jTextFieldPermisosDeLectura;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextFieldRuta;
-    private javax.swing.JTextField jTextFieldTamañoDelArchivo;
     // End of variables declaration//GEN-END:variables
 
 }
