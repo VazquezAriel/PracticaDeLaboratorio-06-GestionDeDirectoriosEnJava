@@ -58,3 +58,5 @@ Recibe la ruta del directorio escogido crea un Fila con dicha ruta y accede a lo
 ## Ejecucion del programa:
 
 ![](https://github.com/VazquezAriel/PracticaDeLaboratorio-06-GestionDeDirectoriosEnJava/blob/master/image.png)
+
+Se recomienda descargar la practica para ejecutar todas las acciones posibles
