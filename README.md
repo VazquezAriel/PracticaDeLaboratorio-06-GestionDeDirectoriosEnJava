@@ -22,7 +22,7 @@ En el cual se crearon 2 paquetes (ec.edu.ups.controlador y ec.edu.ups.vista).
 
 + En el paquete ec.edu.ups.vista se creó una ventana con el nombre de VentanaPrincipal:
 
-![](https://github.com/VazquezAriel/PracticaDeLaboratorio-06-GestionDeDirectoriosEnJava/blob/master/image.png)
+![](https://github.com/VazquezAriel/PracticaDeLaboratorio-06-GestionDeDirectoriosEnJava/blob/master/VentanaCreada.png)
 
 + En la clase ControladorDirectorio se crearon los métodos:
 
@@ -57,3 +57,4 @@ Recibe la ruta del directorio escogido crea un Fila con dicha ruta y accede a lo
 
 ## Ejecucion del programa:
 
+![](https://github.com/VazquezAriel/PracticaDeLaboratorio-06-GestionDeDirectoriosEnJava/blob/master/image.png)
